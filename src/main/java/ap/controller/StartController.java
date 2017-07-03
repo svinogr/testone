@@ -21,7 +21,6 @@ public class StartController {
      if(countRows<countItem){
          imitationAddItems(countItem-countRows);
      }
-
         return "index";
     }
 
