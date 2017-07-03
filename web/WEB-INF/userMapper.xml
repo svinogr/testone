@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ap.dao.UserMapper">
+  <!--  <sql id="userColumns">user_id as userId, name as name</sql>-->
+    <resultMap id="UserResult"  type="ap.model.User">
+        <result property='userId' column='user_id'/>
+        <result property='name' column='name'/>
+    </resultMap>
+    <select id="getUser" parameterType="int" resultType="User">
+        select user_id as userId, name
+      <!--  <include refid="userColumns"/>-->
+        from users where user_id = #{userId}
+    </select>
+
+    <select id="getAllUsers" resultMap="UserResult">
+        SELECT * FROM users
+    </select>
+
+    <insert id="createUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO users (NAME)
+        VALUES ( #{name})
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE users SET name = #{name} WHERE user_id = #{userId}
+    </update>
+
+    <delete id="deleteUser" parameterType="User">
+        DELETE FROM users WHERE user_id =  #{userId}
+    </delete>
+
+    <select id="createTable">
+        CREATE TABLE IF NOT EXISTS users
+         (user_id serial PRIMARY KEY,
+          name VARCHAR(200) NOT NULL)
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
+
+</mapper>
